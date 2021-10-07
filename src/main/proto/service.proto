@@ -4,6 +4,7 @@ package com.example.grpc;
 message receivedMessage{
   string name =1;
   string body  = 2;
+  string topic = 3;
 }
 
 message newResponse {
@@ -12,15 +13,17 @@ message newResponse {
 
 message subscribeRequest {
   string adress = 1;
+  string topic = 2;
 }
 
 message subsribeResponse{
   string isSucces = 1;
+  repeated receivedMessage message = 2;
 }
 
 service messageReceiver {
   rpc receive(receivedMessage)  returns (newResponse);
 }
 service subscribeService {
-  rpc subscribe(subscribeRequest) returns (subsribeResponse);
+  rpc subscribe(subscribeRequest) returns (stream subsribeResponse);
 }
